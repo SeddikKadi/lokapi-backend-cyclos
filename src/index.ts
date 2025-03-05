@@ -236,6 +236,24 @@ class CyclosUserAccount extends UserAccount {
         return this._accounts
     }
 
+    public async isBusinessAccountForFinancialBackend () {
+        let bankAccounts = await this.getAccounts()
+        if (Object.keys(bankAccounts).length === 0) {
+            throw new Error(
+                'Current user account has no bank accounts in cyclos. Unsupported yet.'
+            )
+        }
+        if (Object.keys(bankAccounts).length > 1) {
+            // We will need to select one of the source userAccount of the
+            // current logged in user
+            throw new Error(
+                'Current user account has more than one bank account in cyclos. ' +
+                    'Unsupported yet.'
+            )
+        }
+        return await bankAccounts[0].isBusinessAccountForFinancialBackend()
+    }
+
     async getSymbol () {
         let bankAccounts = await this.getAccounts()
 

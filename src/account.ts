@@ -12,6 +12,10 @@ export class CyclosAccount extends Account implements t.IAccount {
         return this.jsonData.cyclos.status.balance
     }
 
+    public async isBusinessAccountForFinancialBackend () {
+        return (this.jsonData.cyclos.type.internalName === 'comptePro' )
+    }
+    
     async getSymbol () {
         return this.jsonData.cyclos.currency.symbol
     }
